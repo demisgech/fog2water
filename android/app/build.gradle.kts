@@ -31,12 +31,19 @@ android {
     }
 
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+        getByName("release") {
+            // Use debug signing for testing, or define your release signing
             signingConfig = signingConfigs.getByName("debug")
+
+            isMinifyEnabled = true       // Kotlin DSL uses isMinifyEnabled
+            isShrinkResources = true     // Kotlin DSL uses isShrinkResources
+            // isUseProguard = true         // Kotlin DSL uses isUseProguard
+            ndk {
+                debugSymbolLevel = "NONE"
+            }
         }
     }
+
 }
 
 flutter {

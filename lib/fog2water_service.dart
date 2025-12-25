@@ -37,7 +37,7 @@ class Fog2WaterService {
 
     if (response.statusCode != 200) {
       throw Exception(
-        'Failed to send /check command: ${response.statusCode} ${response.body}',
+        'Failed to send /check command: Make sure to enter valid Bot_Token anc Chat_Id',
       );
     }
   }
@@ -57,7 +57,7 @@ class Fog2WaterService {
 
     if (response.statusCode != 200) {
       throw Exception(
-        'Failed to read Telegram updates: ${response.statusCode} ${response.body}',
+        'Failed to read Telegram updates. Please check you network connection and try again.',
       );
     }
 

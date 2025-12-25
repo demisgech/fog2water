@@ -56,6 +56,26 @@ class _Fog2WaterState extends State<Fog2Water> {
   Widget build(BuildContext context) {
     if (errorMessage != null) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text("Error!!", style: TextStyle(color: Colors.red)),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () async {
+                final updated = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Fog2WaterSettingsScreen(),
+                  ),
+                );
+
+                if (updated == true) {
+                  _fetchData(); // refresh dashboard
+                }
+              },
+            ),
+          ],
+        ),
         body: ErrorScreen(
           message: errorMessage,
           onPressed: () {
