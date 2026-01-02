@@ -21,13 +21,13 @@ class Fog2WaterService {
   }
 
   Future<void> _sendCheckCommand(String botToken, String chatId) async {
-    final uri = Uri.https(
-      'api.telegram.org',
-      '/bot${botToken.replaceAll(RegExp(r'\s+'), '')}/sendMessage',
-      {},
-    );
+    // final uri = Uri.https(
+    //   'api.telegram.org',
+    //   '/bot${botToken.replaceAll(RegExp(r'\s+'), '')}/sendMessage',
+    //   {},
+    // );
     // With this mock server URL
-    // final uri = Uri.http('10.2.74.75:4000', '/sendMessage');
+    final uri = Uri.http('10.0.3.1:4000', '/sendMessage');
 
     final response = await http.post(
       uri,
@@ -43,16 +43,16 @@ class Fog2WaterService {
   }
 
   Future<Map<String, dynamic>> _readTelegramResponse(String botToken) async {
-    final uri = Uri.https(
-      'api.telegram.org',
-      '/bot${botToken.replaceAll(RegExp(r'\s+'), '')}/getUpdates',
-      {'offset': (_lastUpdateId + 1).toString()},
-    );
+    // final uri = Uri.https(
+    //   'api.telegram.org',
+    //   '/bot${botToken.replaceAll(RegExp(r'\s+'), '')}/getUpdates',
+    //   {'offset': (_lastUpdateId + 1).toString()},
+    // );
 
     // mock server
-    // final uri = Uri.http('10.2.74.75:4000', '/getUpdates', {
-    //   'offset': (_lastUpdateId + 1).toString(),
-    // });
+    final uri = Uri.http('10.0.3.1:4000', '/getUpdates', {
+      'offset': (_lastUpdateId + 1).toString(),
+    });
     final response = await http.get(uri);
 
     if (response.statusCode != 200) {
@@ -87,9 +87,6 @@ class Fog2WaterService {
     ).firstMatch(message);
 
     return {
-      // "water_level": 0, // Not sent by ESP32 yet
-      // "pH": 0,
-      // "temperature": 0,
       "ppm": ppmMatch != null ? int.parse(ppmMatch.group(1)!) : 0,
       "quality": qualityMatch?.group(1) ?? "Unknown",
     };
